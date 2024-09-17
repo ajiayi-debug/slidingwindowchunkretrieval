@@ -22,7 +22,7 @@ def pdf_to_text(pdf_path, txt_path):
 
 def process_pdfs_in_directory(pdf_directory, output_directory):
     """
-    Convert all PDF files in a specified directory to text files and rename the PDFs.
+    Convert all PDF files in a specified directory to text files.
 
     Args:
     - pdf_directory (str): The directory containing PDF files.
@@ -43,12 +43,12 @@ def process_pdfs_in_directory(pdf_directory, output_directory):
             pdf_to_text(pdf_path, txt_path)
 
             # Generate a new filename using the naming function
-            new_pdf_filename = generate_new_filename(txt_path)
-            new_pdf_path = os.path.join(pdf_directory, new_pdf_filename)
+            new_txt_filename = generate_new_filename(txt_path)
+            new_txt_path = os.path.join(output_directory, new_txt_filename)
 
-            # Rename the PDF file to the new name
-            os.rename(pdf_path, new_pdf_path)
-            print(f"Renamed {pdf_path} to {new_pdf_path}")
+            # Rename the .txt file to the new name
+            os.rename(txt_path, new_txt_path)
+            print(f"Renamed {txt_path} to {new_txt_path}")
 
 
 
@@ -81,3 +81,27 @@ def send_excel(df,directory, filename):
     df.to_excel(output_path, index=False)
     print(f'Data has been written to {output_path}')
 
+def rename_pdfs_based_on_txts(pdf_dir, txt_dir):
+    # Get all .txt filenames in the txt directory
+    txt_files = sorted([f for f in os.listdir(txt_dir) if f.endswith('.txt')])
+    
+    # Get all .pdf filenames in the pdf directory
+    pdf_files = sorted([f for f in os.listdir(pdf_dir) if f.endswith('.pdf')])
+    
+    # Ensure there are equal numbers of PDF and TXT files for renaming
+    if len(txt_files) != len(pdf_files):
+        print("The number of .txt files and .pdf files does not match.")
+        return
+
+    # Loop through each .txt file and rename the corresponding .pdf file
+    for txt_file, pdf_file in zip(txt_files, pdf_files):
+        # Extract base name without extension from .txt file
+        new_name = os.path.splitext(txt_file)[0] + ".pdf"  # Use .txt filename as base and add .pdf extension
+
+        # Define full paths for renaming
+        old_pdf_path = os.path.join(pdf_dir, pdf_file)
+        new_pdf_path = os.path.join(pdf_dir, new_name)
+
+        # Rename the PDF file
+        os.rename(old_pdf_path, new_pdf_path)
+        print(f"Renamed '{pdf_file}' to '{new_name}'")
