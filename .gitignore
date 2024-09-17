@@ -1,5 +1,5 @@
 .env
 *.xlsx
 __pycache__/
-text/
-txt/
+*.pdf
+*.txt
