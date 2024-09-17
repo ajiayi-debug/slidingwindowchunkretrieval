@@ -1,0 +1,11 @@
+langchain
+langchain-community
+langchain-core
+langchain-mongodb
+langchain-openai
+pymongo
+pypdf
+nltk
+langchain_text_splitters
+PyMuPDF
+tqdm
