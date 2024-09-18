@@ -45,7 +45,7 @@ def naming(text):
             model="gpt-4o",
             temperature=0,
             messages=[
-                {"role": "system", "content": "What is the name of the article? Return the name only."},
+                {"role": "system", "content": "What is the title of the article? Return the title only."},
                 {"role": "user", "content": [{"type": "text", "text": text}]}
             ]
         )
